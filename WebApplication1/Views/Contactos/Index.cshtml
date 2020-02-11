@@ -1,0 +1,186 @@
+﻿@model IEnumerable<WebApplication1.Models.Contacto>
+
+@{
+    ViewData["Title"] = "Contactos";
+}
+
+<h2>Contactos</h2>
+
+<p>
+    <!-- <a asp-action="Create">Create New</a> -- ME lleva al metodo create o la vista create que es lo mismo -->
+    <a data-toggle="modal" data-target="#modalContacto" class="btn btn-info">Crear Contacto</a>
+</p>
+
+<div class="form-group">
+    <div class="col-md-6">
+        <input id="filtrar2" name="filtrar" placeholder="Buscar" onKeyUp="filtrarDatos2(1,'Nombres');" class="form-control" />
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a href="#" onclick='filtrarDatos2(1,"Nombres")'>Nombres</a>
+            </th>
+            <th>
+                <a href="#" onclick='filtrarDatos2(1,"Apellidos")'>Apellidos</a>
+            </th>
+            <th>
+                <a href="#" onclick='filtrarDatos2(1,"FechaNacimiento")'>FechaNacimiento</a>
+            </th>
+            <th>
+                <a href="#" onclick='filtrarDatos2(1,"Direccion")'>Direccion</a>
+            </th>
+            <th>
+                <a href="#" onclick='filtrarDatos2(1,"Celular")'>Celular</a>
+            </th>
+            <th>
+                <a href="#" onclick='filtrarDatos2(1,"Celular")'>Email</a>
+            </th>
+            <th>
+                <a href="#" onclick='filtrarDatos2(1,"Departamento")'>Departamento</a>
+            </th>
+            <th>
+                Opciones
+            </th>
+        </tr>
+    </thead>
+    <tbody id="resultSearch"></tbody>
+</table>
+
+
+<!-- Modal para regisrtar -->
+<div class="modal fade" id="modalContacto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="mymodalLabel">Agregar Contacto</h4>
+            </div><!--HEADER-->
+            <div class="modal-body">
+                <form asp-action="">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="Nombres" class="col-md-2 control-label">Nombres</label>
+                            <div class="col-md-9">
+                                <input for="Nombres" id="Nombres" placeholder="Nombres" name="Nombres" class="form-control" />
+                            </div>
+                        </div><!--Nombres-->
+                        <div class="form-group">
+                            <label for="Apellidos" class="col-md-2 control-label">Apellidos</label>
+                            <div class="col-md-9">
+                                <input for="Apellidos" id="Apellidos" placeholder="Apellidos" name="Apellidos" class="form-control" />
+                            </div>
+                        </div><!--Apellidos-->
+                        <div class="form-group">
+                            <label for="FechaN" class="col-md-2 control-label">Fecha de nacimiento</label>
+                            <div class="col-md-9">
+                                <input type="date" for="FechaN" id="FechaN" placeholder="FechaN" name="FechaN" class="form-control" />
+                            </div>
+                        </div><!--FechaN-->
+                        <div class="form-group">
+                            <label for="Direccion" class="col-md-2 control-label">Direccion</label>
+                            <div class="col-md-9">
+                                <input for="Direccion" id="Direccion" placeholder="Direccion" name="Direccion" class="form-control" />
+                            </div>
+                        </div><!--Direccion-->
+                        <div class="form-group">
+                            <label for="Celular" class="col-md-2 control-label">Celular</label>
+                            <div class="col-md-9">
+                                <input for="Celular" id="Celular" placeholder="Celular" name="Celular" class="form-control" />
+                            </div>
+                        </div><!--Celular-->
+                        <div class="form-group">
+                            <label for="Email" class="col-md-2 control-label">Email</label>
+                            <div class="col-md-9">
+                                <input type="email" for="Email" id="Email" placeholder="Email" name="Email" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="idDepartamento" class="col-md-2 control-label">Departamento</label>
+                            <div class="col-md-9">
+                                <input type="idDepartamento" for="idDepartamento" id="idDepartamento" placeholder="idDepartamento" name="idDepartamento" class="form-control" />
+                            </div>
+                        </div>
+                        <label id="mensaje" class="col-md-2 control-label"></label>
+                    </div>
+                </form>
+            </div><!--FIN modal body-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="agregarContacto()">Guardar</button>
+            </div><!--FOOTER-->
+        </div>
+    </div>
+</div>
+
+<!--Modal para editar-->
+<!-- Modal para regisrtar -->
+<div class="modal fade" id="ModalEditontacto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="mymodalLabel">Agregar Contacto</h4>
+            </div><!--HEADER-->
+            <div class="modal-body">
+                <form asp-action="">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="NombresEdit" class="col-md-2 control-label">Nombres</label>
+                            <div class="col-md-9">
+                                <input for="NombresEdit" id="NombresEdit" placeholder="NombresEdit" name="NombresEdit" class="form-control" />
+                            </div>
+                        </div><!--Nombres-->
+                        <div class="form-group">
+                            <label for="ApellidosEdit" class="col-md-2 control-label">Apellidos</label>
+                            <div class="col-md-9">
+                                <input for="ApellidosEdit" id="ApellidosEdit" placeholder="ApellidosEdit" name="ApellidosEdit" class="form-control" />
+                            </div>
+                        </div><!--Apellidos-->
+                        <div class="form-group">
+                            <label for="FechaNEdit" class="col-md-2 control-label">Fecha de nacimiento</label>
+                            <div class="col-md-9">
+                                <input type="date" for="FechaNEdit" id="FechaNEdit" placeholder="FechaNEdit" name="FechaNEdit" class="form-control" />
+                            </div>
+                        </div><!--FechaN-->
+                        <div class="form-group">
+                            <label for="DireccionEdit" class="col-md-2 control-label">Direccion</label>
+                            <div class="col-md-9">
+                                <input for="DireccionEdit" id="DireccionEdit" placeholder="DireccionEdit" name="DireccionEdit" class="form-control" />
+                            </div>
+                        </div><!--Direccion-->
+                        <div class="form-group">
+                            <label for="CelularEdit" class="col-md-2 control-label">Celular</label>
+                            <div class="col-md-9">
+                                <input for="CelularEdit" id="CelularEdit" placeholder="CelularEdit" name="CelularEdit" class="form-control" />
+                            </div>
+                        </div><!--Celular-->
+                        <div class="form-group">
+                            <label for="EmailEdit" class="col-md-2 control-label">Email</label>
+                            <div class="col-md-9">
+                                <input type="EmailEdit" for="EmailEdit" id="EmailEdit" placeholder="EmailEdit" name="EmailEdit" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="idDepartamentoEdit" class="col-md-2 control-label">Departamento</label>
+                            <div class="col-md-9">
+                                <input type="idDepartamentoEdit" for="idDepartamentoEdit" id="idDepartamentoEdit" placeholder="idDepartamentoEdit" name="idDepartamentoEdit" class="form-control" />
+                            </div>
+                        </div> <!--IDdepartamento-->
+                        <label id="mensaje" class="col-md-2 control-label"></label>
+                    </div>
+                </form>
+            </div><!--FIN modal body-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="editarContacto()">Editar</button>
+            </div><!--FOOTER-->
+        </div>
+    </div>
+</div>
